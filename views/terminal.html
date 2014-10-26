@@ -1,0 +1,72 @@
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Spark Test Center</title>
+        <link rel="stylesheet" href="css/terminal.css">
+        <link rel="author" href="humans.txt">
+    </head>
+    <body>
+
+	<span class="width-placeholder"></span>
+
+	<form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" name="submitForm" autocomplete="off">
+
+		<div class="terminal">
+			<div class="header group">
+				<div class="nav">
+					Spark terminal
+				</div>
+				<div class="credentials">
+					<label for="accessToken">access token</label>
+					<input type="text" id="accessToken"  name="accessToken" value="<?= $accessToken ?>">
+					<label for="deviceId">device id</label>
+					<input type="text" id="deviceId" name="deviceId" value="<?= $deviceId ?>">
+				</div>
+				
+
+			</div>
+
+			<div class="status <?= ( $status[ 'connected' ] ) ? 'online' : 'offline' ?>">
+
+				<?php if ( $status[ 'connected' ] ): ?>
+					<p>Alright! <?= $status['name'] ?> is online. Let's get cracking.</p>
+				<?php else: ?>
+					<p>Aw man, <?= $status['name'] ?> is offline. You've got to connect your core first.</p>
+				<?php endif ?>
+				
+			</div>
+
+			<div class="output">
+
+				<?php foreach ($history as $array): ?>
+
+					<pre class="input-text"><?= $array['input']['text'] ?></pre>
+					
+					<pre class="result">result: <code><?= $array['result']['text']['return_value'] ?></code> (type: <?= gettype( $array['result']['text']['return_value'] ) ?>, time to respond: <?= $array['result']['responseTime'] ?>)</pre>
+				<?php endforeach ?>
+
+			</div>
+			<div class="input" >
+				<input type="text" name="input" value="<?= $input ?>" autofocus>
+				<input type="submit" name="submit" value="send">
+			</div>
+		</div>
+
+		
+
+		</form>
+
+		
+		<script>
+
+			var inputHistory = <?= $inputHistory ?>
+
+		</script>
+
+        <script src="js/terminal.js"></script>
+    </body>
+</html>
