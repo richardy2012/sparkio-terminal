@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Spark Test Center</title>
+        <title>Spark Terminal</title>
         <link rel="stylesheet" href="css/terminal.css">
         <link rel="author" href="humans.txt">
     </head>
@@ -14,6 +14,8 @@
 	<span class="width-placeholder"></span>
 
 	<form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" name="submitForm" autocomplete="off">
+		
+		<input type="submit" name="submit" value="send" class="hide"><!-- nasty first submit button hack -->
 
 		<div class="terminal">
 			<div class="header group">
@@ -22,31 +24,53 @@
 				</div>
 				<div class="credentials">
 					<label for="accessToken">access token</label>
-					<input type="text" id="accessToken"  name="accessToken" value="<?= $accessToken ?>">
+					<input type="text" id="accessToken"  name="accessToken" value="<?= $accessToken ?>" placeholder="Enter access token...">
 					<label for="deviceId">device id</label>
-					<input type="text" id="deviceId" name="deviceId" value="<?= $deviceId ?>">
+					<input type="text" id="deviceId" name="deviceId" value="<?= $deviceId ?>" placeholder="Enter device id...">
+					<input type="submit" name="update" value="update" title="Update credentials">
 				</div>
 				
 
 			</div>
 
-			<div class="status <?= ( $status[ 'connected' ] ) ? 'online' : 'offline' ?>">
 
-				<?php if ( $status[ 'connected' ] ): ?>
-					<p>Alright! <?= $status['name'] ?> is online. Let's get cracking.</p>
-				<?php else: ?>
-					<p>Aw man, <?= $status['name'] ?> is offline. You've got to connect your core first.</p>
-				<?php endif ?>
+
+			<?php if ( isset( $status[ 'connected' ] ) ): ?>
+				<div class="status <?= ( $status[ 'connected' ] ) ? 'online' : 'offline' ?>">
+
+					<?php if ( $status[ 'connected' ] ): ?>
+						<p>Alright! <?= $status['name'] ?> is online. Let's get cracking.</p>
+					<?php else: ?>
+						<p>Aw man, <?= $status['name'] ?> is offline. You've got to connect your core first.</p>
+					<?php endif ?>
+					
+				</div>
+			<?php elseif( isset( $status[ 'error' ] ) ) : ?>
 				
-			</div>
+				<div class="status error">
+					<p>Oops! Error code <?= $status['code'] ?>. <?= $status['error_description'] ?> (<?= $status['error'] ?>)</p>
+				</div>
+
+			<?php endif ?>
+
+			
 
 			<div class="output">
 
 				<?php foreach ($history as $array): ?>
-
+				
 					<pre class="input-text"><?= $array['input']['text'] ?></pre>
+
+					<?php if ( isset( $array['result']['text']['error'] ) ) : ?>
+						
+						<pre class="result error">Error: <?= $array['result']['text']['error'] ?></pre>
 					
-					<pre class="result">result: <code><?= $array['result']['text']['return_value'] ?></code> (type: <?= gettype( $array['result']['text']['return_value'] ) ?>, time to respond: <?= $array['result']['responseTime'] ?>)</pre>
+					<?php else: ?>
+
+						<pre class="result">result: <code><?= $array['result']['text']['return_value'] ?></code> (type: <?= gettype( $array['result']['text']['return_value'] ) ?>, time to respond: <?= $array['result']['responseTime'] ?>)</pre>
+
+					<?php endif ?>
+					
 				<?php endforeach ?>
 
 			</div>

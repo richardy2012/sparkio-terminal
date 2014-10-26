@@ -1,4 +1,4 @@
-var variableInputs = document.querySelectorAll( '.credentials input' );
+var variableInputs = document.querySelectorAll( '.credentials input[type=text]' );
 
 function getStringWidth( string )
 {

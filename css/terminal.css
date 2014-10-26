@@ -278,6 +278,11 @@ color:#383838;
 	border-bottom: none;
 }
 
+.terminal .output pre.error
+{
+	color:#FFFFFF;
+}
+
 .terminal .input-text
 {
 	margin-left:24px;
@@ -307,6 +312,19 @@ color:#383838;
 	background-size:18px;
 	margin-left:-24px;
 	margin-bottom:-5px;
+}
+
+.terminal .credentials input[name=update]
+{
+	font-family:sans-serif;
+	height:16px;
+	padding-left:18px;
+	margin-right:0;
+	border:none;
+	background-color:transparent;
+	background:url("../img/ic_refresh_48px.svg") 0px 2px no-repeat;
+	background-size:16px;
+	cursor:pointer;
 }
 
 .terminal .input 

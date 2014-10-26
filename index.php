@@ -2,17 +2,47 @@
 
 	session_start();
 
+
 	if ( isset( $_GET['session'] ) && $_GET['session'] == "destroy" )
 	{
 		session_destroy();
 		$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
 
-		header( 'location: http://' . $_SERVER['HTTP_HOST'] . $uri_parts[0] );
+		refresh( 'http://' . $_SERVER['HTTP_HOST'] . $uri_parts[0] );
 	}
 
-	// ini_set('max_execution_time', 30);
+	if ( isset( $_POST['update'] ) )
+	{
+		updateCredentials( $_POST['deviceId'], $_POST['accessToken'] );
+
+		refresh();
+	}
 	
-	include_once( 'classes/config.php' );
+	function updateCredentials( $deviceId, $accessToken )
+	{
+		$ttl	=	time() + (60 * 60 * 24 * 30);
+
+		setcookie( 'deviceId', $deviceId, $ttl );
+		setcookie( 'accessToken', $accessToken, $ttl );
+	}
+
+	function refresh( $customPage = false )
+	{
+		$url 	=	( $customPage ) ? $customPage : $_SERVER['REQUEST_URI'];
+
+		header( "location: " . $url );
+	}
+
+	$configFile		=	'config.php';
+	$url			=	explode( ".", $_SERVER['HTTP_HOST'] );
+	$serverDomain	=	array_pop( $url );
+
+	if ( $serverDomain == "local" )
+	{
+		$configFile	=	'_localConfig.php';
+	}
+
+	include_once( 'classes/' . $configFile );
 
 	spl_autoload_register( function( $class ) {
 		
@@ -20,14 +50,14 @@
 	
 	} );
 
-	$accessToken	=	ACCESS_TOKEN;
-	$deviceId		=	DEVICE_ID;
+	$accessToken	=	( isset( $_COOKIE[ 'accessToken' ] ) ) ? $_COOKIE[ 'accessToken' ] : ACCESS_TOKEN;
+	$deviceId		=	( isset( $_COOKIE[ 'deviceId' ] ) ) ? $_COOKIE[ 'deviceId' ] : DEVICE_ID;
 
 	$input	=	'';
 
 	$result	=	false;
 	
-	$spark = new API( );
+	$spark = new API( $deviceId, $accessToken );
 
 	$terminal = new Terminal( );
 
@@ -36,10 +66,13 @@
 	if ( isset( $_POST[ 'submit' ]) )
 	{
 		// Check if new access-token or device is being request, if so, load new instance
-		if ( $_POST[ 'accessToken' ] != ACCESS_TOKEN || $_POST[ 'deviceId' ] != DEVICE_ID )
+		if ( $_POST[ 'accessToken' ] != $accessToken || $_POST[ 'deviceId' ] != $deviceId )
 		{
+
 			$accessToken	=	$_POST[ 'accessToken' ];
 			$deviceId		=	$_POST[ 'deviceId' ];
+
+			updateCredentials( $deviceId, $accessToken );
 
 			$spark 	=	new API( $deviceId, $accessToken );
 		}
@@ -63,6 +96,10 @@
 			{
 				$function	=	$function[1];
 			}
+		}
+		else
+		{
+			$function 	=	'';
 		}
 
 		// Get function name
@@ -93,7 +130,7 @@
 
 		$status = $spark->getDeviceProperties();
 
-		header( "location: " . $_SERVER['REQUEST_URI'] );
+		refresh();
 	}
 
 	$history = $terminal->getHistory();
