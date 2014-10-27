@@ -3,9 +3,28 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="description" content="">
+        <meta name="description" content="Spark Web Terminal">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Spark Terminal</title>
+
+		<?php if ( !$local): ?>
+			<script type="text/javascript">
+
+	          var _gaq = _gaq || [];
+	          _gaq.push(['_setAccount', 'UA-27912766-1']);
+	          _gaq.push(['_setDomainName', 'pascalculator.be']);
+	          _gaq.push(['_trackPageview']);
+
+	          (function() {
+	            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	          })();
+
+	        </script>
+		<?php endif ?>
+       
+
         <link rel="stylesheet" href="css/terminal.css">
         <link rel="author" href="humans.txt">
     </head>
@@ -85,6 +104,10 @@
 		</form>
 
 		
+		<footer>
+			written by <a href="http://www.pascalculator.be">pascalculator</a> | <a href="https://github.com/pascalculator/sparkio-terminal">GitHub Repository</a>
+		</footer>
+
 		<script>
 
 			var inputHistory = <?= $inputHistory ?>

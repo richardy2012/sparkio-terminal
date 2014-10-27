@@ -36,10 +36,12 @@
 	$configFile		=	'config.php';
 	$url			=	explode( ".", $_SERVER['HTTP_HOST'] );
 	$serverDomain	=	array_pop( $url );
+	$local			=	false;
 
 	if ( $serverDomain == "local" )
 	{
 		$configFile	=	'_localConfig.php';
+		$local		=	true;
 	}
 
 	include_once( 'classes/' . $configFile );

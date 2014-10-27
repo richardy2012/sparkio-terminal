@@ -4,6 +4,11 @@ html
 	color:#383838;
 }
 
+a, a:visited, a:hover, a:active
+{
+	color:#383838;
+}
+
 .group:after {
   content: "";
   display: table;
@@ -417,4 +422,13 @@ color:#383838;
 {
 	width:65px;
 	padding:0;
+}
+
+footer
+{
+	margin-top: 48px;
+	padding-top:6px;
+	border-top:1px solid #EEEEEE;
+	font-size:12px;
+	text-align:right;
 }
