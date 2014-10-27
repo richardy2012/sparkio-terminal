@@ -1,14 +1,15 @@
 <?php
 
+	
+	ini_set('max_execution_time', 5);
+
 	session_start();
 
 
-	if ( isset( $_GET['session'] ) && $_GET['session'] == "destroy" )
+	if ( isset( $_POST['clear'] ) )
 	{
 		session_destroy();
-		$uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
-
-		refresh( 'http://' . $_SERVER['HTTP_HOST'] . $uri_parts[0] );
+		refresh( );
 	}
 
 	if ( isset( $_POST['update'] ) )
@@ -126,7 +127,15 @@
 			$params	=	$arguments;
 		}
 
-		$result 	=	$spark->call( $function, $params );
+		$type	=	'POST';
+
+		// If the params are set to false, a variable is requested and the GET variable should be passed to API call
+		if ( $params === FALSE )
+		{
+			$type	=	'GET';
+		}
+
+		$result 	=	$spark->call( $function, $params, $type );
 
 		$terminal->addResult( $result );
 

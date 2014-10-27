@@ -1,7 +1,10 @@
-
-- Convert to JS?
-- Add variable recognition
-- Make more responsive
-- Make clear history button
-- Better error handling
+# TODO
+- Convert to Node/JS?
+- Better error handling (which kind...?)
 - Refactor css
+
+
+# DONE
+- Add variable recognition (27/10/2014)
+- Make more responsive (27/10/2014)
+- Make clear history button (27/10/2014)

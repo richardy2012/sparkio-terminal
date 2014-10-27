@@ -46,7 +46,7 @@
 			}
 			else // 'GET'
 			{
-				$completeUrl	=	$this->url . '?' . $paramsString;
+				$completeUrl	=	$this->url . $function . '?' . $paramsString;
 			}
 
 			$ch = curl_init();

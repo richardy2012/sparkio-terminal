@@ -38,31 +38,41 @@
 
 		<div class="terminal">
 			<div class="header group">
+
 				<div class="nav">
 					Spark terminal
 				</div>
-				<div class="credentials">
-					<label for="accessToken">access token</label>
-					<input type="text" id="accessToken"  name="accessToken" value="<?= $accessToken ?>" placeholder="Enter access token...">
-					<label for="deviceId">device id</label>
-					<input type="text" id="deviceId" name="deviceId" value="<?= $deviceId ?>" placeholder="Enter device id...">
-					<input type="submit" name="update" value="update" title="Update credentials">
-				</div>
-				
 
+				<div class="credentials">
+					<ul>
+						<li>
+							<label for="accessToken">access token</label>
+							<input type="text" id="accessToken"  name="accessToken" value="<?= $accessToken ?>" placeholder="Enter access token...">
+						</li>
+						<li>
+							<label for="deviceId">device id</label>
+							<input type="text" id="deviceId" name="deviceId" value="<?= $deviceId ?>" placeholder="Enter device id...">
+						</li>
+						<li><input type="submit" name="update" value="update" title="Update credentials"></li>
+					</ul>
+				</div>
+			
 			</div>
 
 
 
 			<?php if ( isset( $status[ 'connected' ] ) ): ?>
-				<div class="status <?= ( $status[ 'connected' ] ) ? 'online' : 'offline' ?>">
+				<div class="status <?= ( $status[ 'connected' ] ) ? 'online' : 'offline' ?> group">
 
 					<?php if ( $status[ 'connected' ] ): ?>
 						<p>Alright! <?= $status['name'] ?> is online. Let's get cracking.</p>
 					<?php else: ?>
 						<p>Aw man, <?= $status['name'] ?> is offline. You've got to connect your core first.</p>
 					<?php endif ?>
-					
+
+
+					<input type="submit" name="clear" value="clear terminal" title="clear terminal">
+
 				</div>
 			<?php elseif( isset( $status[ 'error' ] ) ) : ?>
 				
@@ -86,7 +96,7 @@
 					
 					<?php else: ?>
 
-						<pre class="result">result: <code><?= $array['result']['text']['return_value'] ?></code> (type: <?= gettype( $array['result']['text']['return_value'] ) ?>, time to respond: <?= $array['result']['responseTime'] ?>)</pre>
+						<pre class="result">result: <code><?= ( isset( $array['result']['text']['return_value'] ) ) ? $array['result']['text']['return_value'] : '' ?><?= ( isset( $array['result']['text']['result'] ) ) ? $array['result']['text']['result']  : '' ?></code> (type: <?= ( isset( $array['result']['text']['return_value'] ) ) ? gettype( $array['result']['text']['return_value'] )  : '' ?><?= ( isset( $array['result']['text']['result'] ) ) ? gettype( $array['result']['text']['result'] )  : '' ?>, time to respond: <?= $array['result']['responseTime'] ?>)</pre>
 
 					<?php endif ?>
 					
