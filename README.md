@@ -15,4 +15,4 @@ Here's the link to the terminal http://spark.pascalculator.be/terminal/ (no SSL)
 - escape: clear input
 
 # Known issues
-Only tested in Chrome (+ mobile)
+Only tested in Chrome (+ mobile), so probably a lot :)
