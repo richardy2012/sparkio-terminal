@@ -1,6 +1,6 @@
 <?php
 
-	define( 'URL', 'https://api.spark.io/v1/devices/' );
+	define( 'URL', 'https://api.particle.io/v1/devices/' );
 	define( 'ACCESS_TOKEN', '' );
 	define( 'DEVICE_ID', '' );
 
