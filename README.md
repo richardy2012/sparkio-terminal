@@ -1,6 +1,6 @@
 # Spark Web Terminal
 
-[![Spark Terminal](https://cdn.rawgit.com/pascalculator/scrubber/master/img/spark-terminal.jpg "Spark Terminal")](http://spark.pascalculator.be/terminal/)
+[![Spark Terminal](https://cdn.rawgit.com/pascalculator/sparkio-terminal/master/img/spark-terminal.jpg "Spark Terminal")](http://spark.pascalculator.be/terminal/)
 
 Here's the link to the terminal http://spark.pascalculator.be/terminal/ (no SSL)
 
@@ -15,4 +15,4 @@ Here's the link to the terminal http://spark.pascalculator.be/terminal/ (no SSL)
 - escape: clear input
 
 # Known issues
-Only tested in Chrome (+ mobile)
+Only tested in Chrome (+ mobile), so probably a lot :)
